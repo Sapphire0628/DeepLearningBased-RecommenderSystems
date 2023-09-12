@@ -12,4 +12,9 @@ In this project, a hybrid recommendation model is implemented, combining a neura
 
 [Amazon review data (2018)](https://cseweb.ucsd.edu/~jmcauley/datasets/amazon_v2/)
 
+
+## Overview of the Context-Aware Hybrid model
+
+![image](./overview.png)
+
 ## Structure of hybrid recommendation model
