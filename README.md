@@ -1,4 +1,4 @@
-# Deep-learning-based-Recommender-systems-Using-Amazon-Reviews
+# Deep learning-based Recommender systems Using Amazon Reviews
 
 ## Description
 
