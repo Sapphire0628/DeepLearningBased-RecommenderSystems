@@ -17,4 +17,4 @@ In this project, a hybrid recommendation model is implemented, combining a neura
 
 ![image](./overview.png)
 
-## Structure of hybrid recommendation model
+## Architecture of hybrid recommendation model
