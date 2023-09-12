@@ -11,3 +11,5 @@ In this project, a hybrid recommendation model is implemented, combining a neura
 ## Data Source
 
 [Amazon review data (2018)](https://cseweb.ucsd.edu/~jmcauley/datasets/amazon_v2/)
+
+## Structure of hybrid recommendation model
