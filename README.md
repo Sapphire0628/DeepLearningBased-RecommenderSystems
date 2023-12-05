@@ -19,9 +19,19 @@ In this project, a hybrid recommendation model is implemented, combining a neura
 
 ## Architecture of a Hybrid model
 
-The hybrid model is used for recommendation systems to predict a user's preference for a particular Amazon fashion product based on past interactions with other products. The model inputs the user, product ID, text, and image. The model consists of four main components. 
-
 ![image](./Architecture.png)
+
+I) Matrix Factorization Component (Black)
+Matrix Factorization Componen uses matrix factorization to learn user and product embeddings. The embeddings are then reshaped and fed into a dot product layer, which predicts the user's preference for a particular product. The dot product layer is normalized to improve the model's performance.
+
+II) Neural Network Component (Red)
+This component uses neural networks to learn additional representations of users and products. The embeddings are again reshaped and concatenated before being fed into a dense layer with 16 units and a ReLU activation function. A dropout layer is added to prevent overfitting.
+
+III) Text-Based Component (Yellow)
+The model includes a text-based component that inputs the product's title. The text is fed into a dense layer with 64 units and a ReLU activation function.
+
+IV) Image-Based Component (Blue)
+The model includes an image-based component that inputs the product's image. The image is flattened into a 1D vector and fed into a dense layer with 256 units and a ReLU activation function.
 
 ## Results and Observation
 
@@ -31,7 +41,7 @@ We employ the Pearson correlation coefficient, RMSE, and MAE to evaluate the hyb
 
 Pearson correlation coefficient takes into account the variability of the data. It measures the linear correlation between the predicted and actual ratings. 
 
-![image](./Pearson_cprrelation.png)
+![image](./Pearson_correlation.png)
 
 After calculating the Pearson correlation coefficient, we obtained a 0.82009 correlation coefficient. It indicated a strong positive correlation between predicted and real ratings.
 
