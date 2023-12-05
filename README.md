@@ -21,8 +21,16 @@ In this project, a hybrid recommendation model is implemented, combining a neura
 
 ![image](./Architecture.png)
 
+## Results and Observation
+
+We employ the Pearson correlation coefficient, RMSE, and MAE to evaluate the hybrid recommendation model's effectiveness.
+
+### Pearson correlation coefficient
+
 ## Full Report
 See documentation [here](./Project_report.pdf)
+
+
 
 
 
