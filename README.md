@@ -15,11 +15,64 @@ In this project, a hybrid recommendation model is implemented, combining a neura
 
 ## Overview of the Context-Aware Hybrid model
 
-![image](./overview.png)
+<img src='.overview.png' width='700'>
 
 ## Architecture of a Hybrid model
+```
+def hybirdModel(user_ids, unique_product_ids,):
+    # Setting the size of embeddings
+    embeddings_size = 32
+    # Getting the number of unique users and products
+    usr, prd = user_ids.shape[0], unique_product_ids.shape[0]
 
-![image](./Architecture.png)
+    # Defining input layers
+    x_users_in = Input(name="User_input", shape=(1,))
+    x_products_in = Input(name="Product_input", shape=(1,))
+    
+    # A) Matrix Factorization
+    ## Embeddings and Reshape layers for user ids
+    cf_xusers_emb = Embedding(name="MF_User_Embedding", input_dim=usr, output_dim=embeddings_size)(x_users_in)
+    cf_xusers = Reshape(name='MF_User_Reshape', target_shape=(embeddings_size,))(cf_xusers_emb)
+    ## Embeddings and Reshape layers for product ids
+    cf_xproducts_emb = Embedding(name="MF_Product_Embedding", input_dim=prd, output_dim=embeddings_size)(x_products_in)
+    cf_xproducts = Reshape(name='MF_Product_Reshape', target_shape=(embeddings_size,))(cf_xproducts_emb)
+    ## Dot product layer
+    cf_xx = Dot(name='MF_Dot', normalize=True, axes=1)([cf_xusers, cf_xproducts])
+
+    # B) Neural Network
+    ## Embeddings and Reshape layers for user ids
+    nn_xusers_emb = Embedding(name="NN_User_Embedding", input_dim=usr, output_dim=embeddings_size)(x_users_in)
+    nn_xusers = Reshape(name='NN_User_Reshape', target_shape=(embeddings_size,))(nn_xusers_emb)
+    ## Embeddings and Reshape layers for product ids
+    nn_xproducts_emb = Embedding(name="NN_Product_Embedding", input_dim=prd, output_dim=embeddings_size)(x_products_in)
+    nn_xproducts = Reshape(name='NN_Product_Reshape', target_shape=(embeddings_size,))(nn_xproducts_emb)
+    ## Concatenate and dense layers
+    nn_xx = Concatenate()([nn_xusers, nn_xproducts])
+    nn_xx = Dense(name="NN_layer", units=16, activation='relu')(nn_xx)
+    nn_xx = Dropout(0.1)(nn_xx)
+    ######################### TEXT BASED ############################
+    text_in = Input(name="title_input", shape=(64,))
+    text_x = Dense(name="title_layer", units=64, activation='relu')(text_in)
+
+    ######################## IMAGE BASED ###########################
+    image_in = Input(name="image_input", shape=(512,))
+    image_x = Dense(name="image_layer", units=256, activation='relu')(image_in)
+       
+    content_xx = Concatenate()([text_x, image_x])
+    content_xx = Dense(name="contect_layer", units=128, activation='relu')(content_xx)
+    # Merge all
+    y_out = Concatenate()([cf_xx, nn_xx, content_xx])
+
+    y_out = Dense(name="CF_contect_layer", units=64, activation='linear')(y_out)
+    y_out = Dense(name="y_output", units=1, activation='linear')(y_out)
+    model = Model(inputs=[x_users_in,x_products_in, text_in, image_in], outputs=y_out, name="Hybrid_Model")
+    adam = optimizers.Adam(lr=0.01, decay = 0.0001)
+    model.compile(optimizer=adam, loss='mae', metrics=[tf.keras.metrics.RootMeanSquaredError(), tf.keras.metrics.mean_absolute_error])
+    
+    return model
+```
+
+<img src='./Architecture.png' width='700'>
 
 I) Matrix Factorization Component (Black)
 Matrix Factorization Componen uses matrix factorization to learn user and product embeddings. The embeddings are then reshaped and fed into a dot product layer, which predicts the user's preference for a particular product. The dot product layer is normalized to improve the model's performance.
@@ -41,7 +94,7 @@ We employ the Pearson correlation coefficient, RMSE, and MAE to evaluate the hyb
 
 Pearson correlation coefficient takes into account the variability of the data. It measures the linear correlation between the predicted and actual ratings. 
 
-![image](./Pearson_correlation.png)
+<img src='./Pearson_correlation.png' width='400'>
 
 After calculating the Pearson correlation coefficient, we obtained a 0.82009 correlation coefficient. It indicated a strong positive correlation between predicted and real ratings.
 
@@ -57,7 +110,7 @@ After model training and prediction, we obtained that the RMSE is 0.75259 and th
 
 The hybrid model converges at around 10 epochs, which means that the model has learned to make accurate predictions on the training data after approximately five passes through the training set. They indicate that the model is learning quickly and efficiently.
 
-![image](./Covergence_preformance.png)
+<img src='./Covergence_preformance.png' width='400'>
 
 ## Full Report
 See documentation [here](./Project_report.pdf)
