@@ -15,7 +15,7 @@ In this project, a hybrid recommendation model is implemented, combining a neura
 
 ## Overview of the Context-Aware Hybrid model
 
-<img src='.overview.png' width='700'>
+<img src='./overview.png' width='800'>
 
 ## Architecture of a Hybrid model
 ```
@@ -72,7 +72,7 @@ def hybirdModel(user_ids, unique_product_ids,):
     return model
 ```
 
-<img src='./Architecture.png' width='700'>
+<img src='./Architecture.png' width='800'>
 
 I) Matrix Factorization Component (Black)
 Matrix Factorization Componen uses matrix factorization to learn user and product embeddings. The embeddings are then reshaped and fed into a dot product layer, which predicts the user's preference for a particular product. The dot product layer is normalized to improve the model's performance.
@@ -94,7 +94,7 @@ We employ the Pearson correlation coefficient, RMSE, and MAE to evaluate the hyb
 
 Pearson correlation coefficient takes into account the variability of the data. It measures the linear correlation between the predicted and actual ratings. 
 
-<img src='./Pearson_correlation.png' width='400'>
+<img src='./Pearson_correlation.png' width='500'>
 
 After calculating the Pearson correlation coefficient, we obtained a 0.82009 correlation coefficient. It indicated a strong positive correlation between predicted and real ratings.
 
@@ -110,7 +110,7 @@ After model training and prediction, we obtained that the RMSE is 0.75259 and th
 
 The hybrid model converges at around 10 epochs, which means that the model has learned to make accurate predictions on the training data after approximately five passes through the training set. They indicate that the model is learning quickly and efficiently.
 
-<img src='./Covergence_preformance.png' width='400'>
+<img src='./Covergence_preformance.png' width='500'>
 
 ## Full Report
 See documentation [here](./Project_report.pdf)
